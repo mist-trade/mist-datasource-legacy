@@ -1,9 +1,9 @@
-# TDX OpenAPI Summary
+# TDX OpenAPI Summary (legacy)
 
 Title: Mist DataSource - TDX Adapter
 Version: 0.1.0
 
-Generated from `tdx.main:app.openapi()`.
+Generated from the `tdx` FastAPI app in `legacy` mode.
 
 ## GET /api/tdx/bkjy-value
 
