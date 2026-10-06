@@ -65,7 +65,21 @@ nohup bash -c "cd '$ROOT' && export MIST_QMT_SUBSCRIPTION_JOURNAL_PATH='$PIDS_DI
 # skips cached modules), so it runs via the official node -r register entry. NODE_OPTIONS
 # is inherited by the node process nest watch spawns, so it survives rebuilds.
 set -a; source "$SCRIPT_DIR/.env.mock"; set +a
-nohup bash -c "cd '$BACKEND' && export $OTEL_COMMON && export NODE_OPTIONS=\"--require @opentelemetry/auto-instrumentations-node/register\" && exec pnpm start:dev" \
+if [ "${MIST_MOCK_CLOCK_OFFSET_MS:-auto}" = "auto" ] || [ "${MIST_MOCK_CLOCK_OFFSET_MS:-}" = "60115784" ]; then
+  CALC_OFFSET=$(python3 -c "
+import datetime, zoneinfo
+tz = zoneinfo.ZoneInfo('Asia/Shanghai')
+now = datetime.datetime.now(tz)
+target = now.replace(hour=9, minute=44, second=30, microsecond=0)
+diff_ms = int((target - now).total_seconds() * 1000)
+print(diff_ms)
+" 2>/dev/null || true)
+  if [ -n "$CALC_OFFSET" ]; then
+    export MIST_MOCK_CLOCK_OFFSET_MS="$CALC_OFFSET"
+    echo "==> MIST_MOCK_CLOCK_OFFSET_MS dynamically calculated as $MIST_MOCK_CLOCK_OFFSET_MS (target 09:44:30 CST)"
+  fi
+fi
+nohup bash -c "cd '$BACKEND' && export MIST_MOCK_CLOCK_OFFSET_MS='$MIST_MOCK_CLOCK_OFFSET_MS' && export $OTEL_COMMON && export NODE_OPTIONS=\"--require @opentelemetry/auto-instrumentations-node/register\" && exec pnpm start:dev" \
   >"$PIDS_DIR/backend.log" 2>&1 & echo $! >"$PIDS_DIR/backend.pid"
 
 # 4. wait healthy
