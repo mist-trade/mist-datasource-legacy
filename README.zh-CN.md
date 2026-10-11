@@ -4,6 +4,9 @@
 
 # Mist Datasource 行情数据源桥接系统
 
+> **已归档 — legacy 快照。** 本仓库已归档，仅作只读保留，是 `mist-datasource`
+> 项目早期的公开历史快照。后续开发已迁移至私有仓库，本仓库不再维护与更新。
+
 <p align="left">
   <img src="https://img.shields.io/badge/Python-3.12-blue.svg" alt="Python 3.12" />
   <img src="https://img.shields.io/badge/FastAPI-0.115+-009688.svg" alt="FastAPI" />

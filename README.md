@@ -4,6 +4,11 @@
 
 # Mist Datasource — TDX/QMT Market Data Gateway
 
+> **Archived — legacy snapshot.** This repository is archived and read-only. It
+> preserves the original public history of the `mist-datasource` project.
+> Active development has moved to a private repository and is no longer
+> maintained here.
+
 <p align="left">
   <img src="https://img.shields.io/badge/Python-3.12-blue.svg" alt="Python 3.12" />
   <img src="https://img.shields.io/badge/FastAPI-0.115+-009688.svg" alt="FastAPI" />
